@@ -1,0 +1,247 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <!-- <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <meta name="viewport" content="minimum-scale=1"/> -->
+        <meta name="viewport" content="height=device-height, 
+                      width=device-width, initial-scale=1.0, 
+                      minimum-scale=1.0, maximum-scale=1.0, 
+                      user-scalable=no, target-densitydpi=device-dpi">
+
+        <title>
+
+        </title>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/bootstrap.css"  rel="stylesheet" type="text/css"  />
+        <link href="index.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="fontawesome-free-6.4.0-web/fontawesome-free-6.4.0-web/css/all.min.css">
+    </head>
+
+    <body >
+        <div class="container-fluid khung m-0 p-0">
+            <div class="container Khung_banCo bg-light d-flex justify-content-center">
+                <div class="banCo d-flex">
+                    <div class="oCo">
+                        <div class="co ">
+                           <div class="x "><i class="fa-solid fa-xmark"></i></div>
+                           <div class="o "><i class="fa-solid fa-o"></i></div>
+                        </div>
+                    </div>
+                    <div class="oCo ">
+                        <div class="co">
+                            <div class="x "><i class="fa-solid fa-xmark"></i></div>
+                            <div class="o "><i class="fa-solid fa-o"></i></div>
+                         </div> 
+
+                    </div>
+                    <div class="oCo">
+                        <div class="co">
+                            <div class="x "><i class="fa-solid fa-xmark"></i></div>
+                            <div class="o "><i class="fa-solid fa-o"></i></div>
+                         </div>
+
+                    </div>
+                    <div class="oCo">
+                        <div class="co">
+                            <div class="x "><i class="fa-solid fa-xmark"></i></div>
+                            <div class="o "><i class="fa-solid fa-o"></i></div>
+                         </div> 
+                    </div>
+                    <div class="oCo ">
+                        <div class="co">
+                            <div class="x "><i class="fa-solid fa-xmark"></i></div>
+                            <div class="o "><i class="fa-solid fa-o"></i></div>
+                         </div> 
+                    </div>
+                    <div class="oCo">
+                        <div class="co">
+                            <div class="x"><i class="fa-solid fa-xmark"></i></div>
+                            <div class="o "><i class="fa-solid fa-o"></i></div>
+                         </div> 
+                    </div>
+                    <div class="oCo">
+                        <div class="co">
+                            <div class="x "><i class="fa-solid fa-xmark"></i></div>
+                            <div class="o "><i class="fa-solid fa-o"></i></div>
+                         </div> 
+                    </div>
+                    <div class="oCo">
+                        <div class="co">
+                            <div class="x"><i class="fa-solid fa-xmark"></i></div>
+                            <div class="o "><i class="fa-solid fa-o"></i></div>
+                         </div> 
+                    </div>
+                    <div class="oCo ">
+                        <div class="co">
+                            <div class="x "><i class="fa-solid fa-xmark"></i></div>
+                            <div class="o "><i class="fa-solid fa-o"></i></div>
+                         </div> 
+                    </div>
+                </div>
+            </div>
+            <div class="kq xThang">
+                <h1>X thắng</h3>
+            </div>
+            <div class="kq oThang">
+                <h1>O thắng</h3>
+            </div>
+            <div class="kq hoa">
+                <h1>Hòa</h3>
+            </div>
+            <button class="btn">
+                <h1>Ván mới</h1>
+            </button>
+        </div>
+        <script>
+            var choiLai = document.querySelector('.btn');
+            var xThang = document.querySelector('.xThang');
+            var oThang = document.querySelector('.oThang');
+            var hoa = document.querySelector('.hoa');
+                var oCoElements = document.querySelectorAll('.oCo');
+                var xo = true;
+                
+                
+
+
+                var a = ['n','n','n','n','n','n','n','n','n'];
+                function check (a){
+                
+                if((a[0] === 'x' && a[1] === 'x' && a[2] === 'x') ||
+                        (a[3] === 'x' && a[4] === 'x' && a[5] === 'x') ||
+                        (a[6] === 'x' && a[7] === 'x' && a[8] === 'x') ||
+                        (a[0] === 'x' && a[3] === 'x' && a[6] === 'x') ||
+                        (a[1] === 'x' && a[4] === 'x' && a[7] === 'x') ||
+                        (a[2] === 'x' && a[5] === 'x' && a[8] === 'x') ||
+                        (a[0] === 'x' && a[4] === 'x' && a[8] === 'x') ||
+                        (a[2] === 'x' && a[4] === 'x' && a[6] === 'x'))
+                    {   
+                        xWin();
+                        setTimeout(function() {
+                            xThang.style.display = 'block';
+                            choiLai.style.display = 'block';
+                        }, 1100); // 3 giây (3000 milliseconds)
+
+                } else if ( (a[0] === 'o' && a[1] === 'o' && a[2] === 'o') ||
+                            (a[3] === 'o' && a[4] === 'o' && a[5] === 'o') ||
+                            (a[6] === 'o' && a[7] === 'o' && a[8] === 'o') ||
+                            (a[0] === 'o' && a[3] === 'o' && a[6] === 'o') ||
+                            (a[1] === 'o' && a[4] === 'o' && a[7] === 'o') ||
+                            (a[2] === 'o' && a[5] === 'o' && a[8] === 'o') ||
+                            (a[0] === 'o' && a[4] === 'o' && a[8] === 'o') ||
+                            (a[2] === 'o' && a[4] === 'o' && a[6] === 'o'))
+                    {   oWin();
+                        setTimeout(function() {
+                            oThang.style.display = 'block';
+                            choiLai.style.display = 'block';
+                        }, 1200); // 3 giây (3000 milliseconds)
+                    }else if(!a.includes('n')){
+                        hoa.style.display = 'block';
+                        choiLai.style.display = 'block';
+                        }
+                }
+
+                oCoElements.forEach(function(element,index) {
+                    element.addEventListener('click', function() {
+                        var xElement = this.querySelector('.x');
+                        var oElement = this.querySelector('.o');
+                        
+                        if( xo === true &&  xElement.style.display != 'block'&&  oElement.style.display != 'block'){
+                            xElement.style.display = 'block';
+                            xo = false;
+                            a[index]='x';
+                            console.log(a);
+                            check(a);
+                        }else if ( xo === false &&  xElement.style.display != 'block'&&  oElement.style.display != 'block') {
+                            oElement.style.display = 'block';
+                            xo = true;
+                            a[index]='o';
+                            check(a);
+                        } 
+                    });
+                });
+
+            choiLai.addEventListener('click',function(){
+                history.go(0);
+            })
+
+            function xWin(){
+                if(a[3] === 'x' && a[4] === 'x' && a[5] === 'x'){
+                    oCoElements[3].classList.add("maunenX1");
+                    oCoElements[4].classList.add("maunenX2");
+                    oCoElements[5].classList.add("maunenX3");
+                } else if(a[0] === 'x' && a[1] === 'x' && a[2] === 'x'){
+                    oCoElements[0].classList.add("maunenX1");
+                    oCoElements[1].classList.add("maunenX2");
+                    oCoElements[2].classList.add("maunenX3");
+                }else if(a[6] === 'x' && a[7] === 'x' && a[8] === 'x'){
+                    oCoElements[6].classList.add("maunenX1");
+                    oCoElements[7].classList.add("maunenX2");
+                    oCoElements[8].classList.add("maunenX3");
+                } else if(a[0] === 'x' && a[3] === 'x' && a[6] === 'x'){
+                    oCoElements[0].classList.add("maunenX1");
+                    oCoElements[3].classList.add("maunenX2");
+                    oCoElements[6].classList.add("maunenX3");
+                } else if(a[1] === 'x' && a[4] === 'x' && a[7] === 'x'){
+                    oCoElements[1].classList.add("maunenX1");
+                    oCoElements[4].classList.add("maunenX2");
+                    oCoElements[7].classList.add("maunenX3");
+                }else if(a[2] === 'x' && a[5] === 'x' && a[8] === 'x'){
+                    oCoElements[2].classList.add("maunenX1");
+                    oCoElements[5].classList.add("maunenX2");
+                    oCoElements[8].classList.add("maunenX3");
+                }else if(a[0] === 'x' && a[4] === 'x' && a[8] === 'x'){
+                    oCoElements[0].classList.add("maunenX1");
+                    oCoElements[4].classList.add("maunenX2");
+                    oCoElements[8].classList.add("maunenX3");
+                }else if(a[2] === 'x' && a[4] === 'x' && a[6] === 'x'){
+                    oCoElements[2].classList.add("maunenX1");
+                    oCoElements[4].classList.add("maunenX2");
+                    oCoElements[6].classList.add("maunenX3");
+                }
+            }
+            function oWin(){
+                if(a[3] === 'o' && a[4] === 'o' && a[5] === 'o'){
+                    oCoElements[3].classList.add("maunenO1");
+                    oCoElements[4].classList.add("maunenO2");
+                    oCoElements[5].classList.add("maunenO3");
+                } else if(a[0] === 'o' && a[1] === 'o' && a[2] === 'o'){
+                    oCoElements[0].classList.add("maunenO1");
+                    oCoElements[1].classList.add("maunenO2");
+                    oCoElements[2].classList.add("maunenO3");
+                }else if(a[6] === 'o' && a[7] === 'o' && a[8] === 'o'){
+                    oCoElements[6].classList.add("maunenO1");
+                    oCoElements[7].classList.add("maunenO2");
+                    oCoElements[8].classList.add("maunenO3");
+                } else if(a[0] === 'o' && a[3] === 'o' && a[6] === 'o'){
+                    oCoElements[0].classList.add("maunenO1");
+                    oCoElements[3].classList.add("maunenO2");
+                    oCoElements[6].classList.add("maunenO3");
+                } else if(a[1] === 'o' && a[4] === 'o' && a[7] === 'o'){
+                    oCoElements[1].classList.add("maunenO1");
+                    oCoElements[4].classList.add("maunenO2");
+                    oCoElements[7].classList.add("maunenO3");
+                }else if(a[2] === 'o' && a[5] === 'o' && a[8] === 'o'){
+                    oCoElements[2].classList.add("maunenO1");
+                    oCoElements[5].classList.add("maunenO2");
+                    oCoElements[8].classList.add("maunenO3");
+                }else if(a[0] === 'o' && a[4] === 'o' && a[8] === 'o'){
+                    oCoElements[0].classList.add("maunenO1");
+                    oCoElements[4].classList.add("maunenO2");
+                    oCoElements[8].classList.add("maunenO3");
+                }else if(a[2] === 'o' && a[4] === 'o' && a[6] === 'o'){
+                    oCoElements[2].classList.add("maunenO1");
+                    oCoElements[4].classList.add("maunenO2");
+                    oCoElements[6].classList.add("maunenO3");
+                }
+            }
+            
+
+
+
+        </script>
+
+    </body>
+    </html>
