@@ -1,0 +1,67 @@
+package com.lasercodes.thaphanoi_dequi;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author 84765
+ */
+public class chiaMangConDoLechNhoNhat {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Nhập số lượng phần tử: ");
+        int n = scanner.nextInt();
+        int t = 0;
+        int[] a = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            a[i] = scanner.nextInt();
+            t += a[i];
+        }
+        t /= 2;
+
+        // QHD
+        int[] f = new int[t + 1];
+        int[] d = new int[n + 1];
+        for (int i = 1; i <= t; i++) {
+            f[i] = Integer.MAX_VALUE;
+            for (int j = 1; j <= n; j++) {
+                if (i >= a[j] && j > f[i - a[j]]) {
+                    f[i] = j;
+                    break;
+                }
+            }
+        }
+
+        // Truy vết
+        while (f[t] > n) {
+            t--;
+        }
+        while (t > 0) {
+            d[f[t]] = 1;
+            t -= a[f[t]];
+        }
+
+        int Tong = 0;
+        // In kết quả
+        System.out.print("Tap P: ");
+        for (int i = 1; i <= n; i++) {
+            if (d[i] == 1) {
+                System.out.print(a[i] + " ");
+                Tong += a[i];
+            }
+        }
+        System.out.print("    , Tong P = " + Tong);
+        Tong = 0;
+        
+        System.out.println();
+        System.out.print("Tap Q: ");
+        for (int i = 1; i <= n; i++) {
+            if (d[i] != 1) {
+                System.out.print(a[i] + " ");
+                Tong += a[i];
+            }
+        }
+        System.out.print("    , Tong Q = " + Tong);
+    }
+}
