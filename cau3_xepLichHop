@@ -1,0 +1,66 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.lasercodes.thaphanoi_dequi;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+/**
+ *
+ * @author 84765
+ */
+class Meeting {
+
+    int start;
+    int end;
+
+    Meeting(int start, int end) {
+        this.start = start;
+        this.end = end;
+    }
+}
+
+public class cuochop {
+
+    public static void main(String[] args) {
+        int N = 6;
+
+        int[] startTimes = {1, 3, 0, 5, 8, 5};
+        int[] endTimes = {2, 4, 6, 7, 9, 9};
+
+        findOptimalSchedule(N, startTimes, endTimes);
+    }
+
+    public static void findOptimalSchedule(int N, int[] startTimes, int[] endTimes) {
+        // Sắp xếp các cuộc họp theo thời gian kết thúc (dùng thuật toán Insertion Sort)
+        for (int i = 1; i < N; i++) {
+            int keyStartTime = startTimes[i];
+            int keyEndTime = endTimes[i];
+            int j = i - 1;
+
+            while (j >= 0 && endTimes[j] > keyEndTime) {
+                endTimes[j + 1] = endTimes[j];
+                startTimes[j + 1] = startTimes[j];
+                j = j - 1;
+            }
+            endTimes[j + 1] = keyEndTime;
+            startTimes[j + 1] = keyStartTime;
+        }
+
+        System.out.println("Cac cuoc hop duoc chon:");
+        System.out.println("Cuoc hop 1: Index = 0, thoi gian bat dau: " + startTimes[0] + " -  thoi gian ket thuc: " + endTimes[0]);
+        int lastEndTime = endTimes[0];
+
+        // Tìm và in ra thông tin của các cuộc họp tiếp theo
+        int j = 2;
+        for (int i = 1; i < N; i++) {
+            if (startTimes[i] >= lastEndTime) {
+                System.out.println("Cuoc hop " + (j) + ": Index = " + i + ", thoi gian bat dau: " + startTimes[i] + " -  thoi gian ket thuc: " + endTimes[i]);
+                lastEndTime = endTimes[i];
+                j++;
+            }
+        }
+    }
+}
