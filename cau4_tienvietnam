@@ -1,0 +1,36 @@
+/*
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
+ */
+package com.lasercodes.ttud_fibo;
+
+import java.util.Arrays;
+
+/**
+ *
+ * @author 84765
+ */
+public class TTUD_FIBO {
+
+        public static void rútTiền(int tiền, int[] mệnhGiá) {
+        // Sắp xếp các mệnh giá tiền theo thứ tự giảm dần
+        Arrays.sort(mệnhGiá);
+
+        // Duyệt qua từng mệnh giá tiền từ lớn đến nhỏ
+        for (int i = mệnhGiá.length - 1; i >= 0; i--) {
+            // Nếu số tiền cần rút lớn hơn hoặc bằng mệnh giá tiền hiện tại, thì rút số lượng tiền bằng mệnh giá tiền hiện tại
+            if (tiền >= mệnhGiá[i]) {
+                int sốTờTiền = tiền / mệnhGiá[i];
+                tiền -= sốTờTiền * mệnhGiá[i];
+                System.out.println("Rút " + sốTờTiền + " tờ tiền mệnh giá " + mệnhGiá[i]);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int tiền = 23987800;
+        int[] mệnhGiá = {500000, 200000, 100000, 50000, 20000, 10000, 5000, 2000, 1000, 500};
+
+        rútTiền(tiền, mệnhGiá);
+    }
+}
