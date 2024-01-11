@@ -1,0 +1,59 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
+ */
+package com.lasercodes.nguyenthaihoc_cntt2_ttud_th2;
+
+/**
+ *
+ * @author 84765
+ */
+public class NguyenThaiHoc_CNTT2_TTUD_TH2 {
+
+    static void knapsack(int W, int[] wt, int[] val, int n) {
+        int[][] K = new int[n + 1][W + 1];
+        boolean[][] selectedItems = new boolean[n + 1][W + 1];
+
+        for (int i = 0; i <= n; i++) {
+            for (int w = 0; w <= W; w++) {
+                if (i == 0 || w == 0) {
+                    K[i][w] = 0;
+                } else if (wt[i - 1] <= w) {
+                    int newValue = val[i - 1] + K[i - 1][w - wt[i - 1]];
+                    if (newValue > K[i - 1][w]) {
+                        K[i][w] = newValue;
+                        selectedItems[i][w] = true;
+                    } else {
+                        K[i][w] = K[i - 1][w];
+                    }
+                } else {
+                    K[i][w] = K[i - 1][w];
+                }
+            }
+        }
+
+        int i = n;
+        int w = W;
+        System.out.println("Gia tri cua cac goi hang bo vao balo: " + K[n][W]);
+        System.out.println("Cac goi hang duoc chon: ");
+        while (i > 0 && w > 0) {
+            if (selectedItems[i][w]) {
+                System.out.print(i + "(" + wt[i - 1] + "," + val[i - 1] + ")\t");
+                w -= wt[i - 1];
+                i--;
+            } else {
+                i--;
+            }
+        }
+
+    }
+
+    // Driver code 
+    public static void main(String args[]) {
+        int weight[] = new int[]{3, 4, 5, 2, 1};
+        int val[] = new int[]{4, 5, 6, 3, 1};
+        int W = 13;
+        int n = val.length;
+        knapsack(W, weight, val, n);
+    }
+}
