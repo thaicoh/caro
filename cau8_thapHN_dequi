@@ -1,0 +1,33 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
+ */
+package com.lasercodes.thaphanoi_dequi;
+
+/**
+ *
+ * @author 84765
+ */
+public class Thaphanoi_dequi {
+
+    public static void main(String[] args) {
+        int numberOfDisks = 3;
+        char fromPeg = 'A';
+        char toPeg = 'C';
+        char auxPeg = 'B';
+
+        System.out.println("Bước đi chuyển " + numberOfDisks + " đĩa từ tháp " + fromPeg + " đến tháp " + toPeg);
+        solveHanoi(numberOfDisks, fromPeg, toPeg, auxPeg);
+    }
+
+    public static void solveHanoi(int n, char fromPeg, char toPeg, char auxPeg) {
+        if (n == 1) {
+            System.out.println("Chuyển đĩa 1 từ tháp " + fromPeg + " đến tháp " + toPeg);
+            return;
+        }
+
+        solveHanoi(n - 1, fromPeg, auxPeg, toPeg);
+        System.out.println("Chuyển đĩa " + n + " từ tháp " + fromPeg + " đến tháp " + toPeg);
+        solveHanoi(n - 1, auxPeg, toPeg, fromPeg);
+    }
+}
