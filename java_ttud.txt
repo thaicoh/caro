@@ -1,0 +1,356 @@
+Cau 1: cho Tập A= (a1,a2,…an), với ai>0. Hãy viết chương trình chia tập A thành 2 nhóm P và Q (mổi phần tử chỉ thuộc một nhóm) sao cho tổng 2 tập có độ lệch nhỏ nhất.
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Nhập số lượng phần tử: ");
+        int n = scanner.nextInt();
+        int t = 0;
+        int[] a = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            a[i] = scanner.nextInt();
+            t += a[i];
+        }
+        t /= 2;
+
+        // QHD
+        int[] f = new int[t + 1];
+        int[] d = new int[n + 1];
+        for (int i = 1; i <= t; i++) {
+            f[i] = Integer.MAX_VALUE;
+            for (int j = 1; j <= n; j++) {
+                if (i >= a[j] && j > f[i - a[j]]) {
+                    f[i] = j;
+                    break;
+                }
+            }
+        }
+
+        // Truy vết
+        while (f[t] > n) {
+            t--;
+        }
+        while (t > 0) {
+            d[f[t]] = 1;
+            t -= a[f[t]];
+        }
+
+        int Tong = 0;
+        // In kết quả
+        System.out.print("Tap P: ");
+        for (int i = 1; i <= n; i++) {
+            if (d[i] == 1) {
+                System.out.print(a[i] + " ");
+                Tong += a[i];
+            }
+        }
+        System.out.print("    , Tong P = " + Tong);
+        Tong = 0;
+
+        System.out.println();
+        System.out.print("Tap Q: ");
+        for (int i = 1; i <= n; i++) {
+            if (d[i] != 1) {
+                System.out.print(a[i] + " ");
+                Tong += a[i];
+            }
+        }
+        System.out.print("    , Tong Q = " + Tong);
+    }
+
+
+Câu 2: số fibonacci
+
+public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Nhập số N: ");
+        int N = scanner.nextInt();
+
+        int result = calculateFunction(N);
+        System.out.println("Giá trị của f(" + N + ") là: " + result);
+    }
+
+    public static int calculateFunction(int N) {
+        if (N == 0) {
+            return 0;
+        } else if (N == 1) {
+            return 1;
+        } else if (N == 2) {
+            return 2;
+        } else if (N % 3 == 0) {
+            // f(3k) = f(2k) với k > 0
+            return calculateFunction(N / 3 * 2);
+        } else if (N % 3 == 1) {
+            // f(3k+1) = f(2k) + f(2k+1) với k > 0
+            int k = N / 3;
+            return calculateFunction(2 * k) + calculateFunction(2 * k + 1);
+        } else {
+            // f(3k+2) = f(2k) + f(2k+1) + f(2k+2) với k > 0
+            int k = N / 3;
+            return calculateFunction(2 * k) + calculateFunction(2 * k + 1) + calculateFunction(2 * k + 2);
+        }
+    }
+
+
+Câu 3: Công ty dự kiến tổ chức N cuộc họp, cuộc họp thứ k bắt đầu từ thời điểm sk và kết thúc ở thời điểm fk 
+
+
+public static void main(String[] args) {
+        int N = 6;
+
+        int[] startTimes = {1, 3, 0, 5, 8, 5};
+        int[] endTimes = {2, 4, 6, 7, 9, 9};
+
+        findOptimalSchedule(N, startTimes, endTimes);
+    }
+
+    public static void findOptimalSchedule(int N, int[] startTimes, int[] endTimes) {
+        // Sắp xếp các cuộc họp theo thời gian kết thúc (dùng thuật toán Insertion Sort)
+        for (int i = 1; i < N; i++) {
+            int keyStartTime = startTimes[i];
+            int keyEndTime = endTimes[i];
+            int j = i - 1;
+
+            while (j >= 0 && endTimes[j] > keyEndTime) {
+                endTimes[j + 1] = endTimes[j];
+                startTimes[j + 1] = startTimes[j];
+                j = j - 1;
+            }
+            endTimes[j + 1] = keyEndTime;
+            startTimes[j + 1] = keyStartTime;
+        }
+
+        System.out.println("Cac cuoc hop duoc chon:");
+        System.out.println("Cuoc hop 1: Index = 0, thoi gian bat dau: " + startTimes[0] + " -  thoi gian ket thuc: " + endTimes[0]);
+        int lastEndTime = endTimes[0];
+
+        // Tìm và in ra thông tin của các cuộc họp tiếp theo
+        int j = 2;
+        for (int i = 1; i < N; i++) {
+            if (startTimes[i] >= lastEndTime) {
+                System.out.println("Cuoc hop " + (j) + ": Index = " + i + ", thoi gian bat dau: " + startTimes[i] + " -  thoi gian ket thuc: " + endTimes[i]);
+                lastEndTime = endTimes[i];
+                j++;
+            }
+        }
+    }
+
+
+Câu 4: viết chương trình cho bài toán rút tiền với các mệnh giá tiền việt nam. Sao cho số tờ tiền  được rút là ít nhất
+
+public static void rútTiền(int tiền, int[] mệnhGiá) {
+        // Sắp xếp các mệnh giá tiền theo thứ tự giảm dần
+        Arrays.sort(mệnhGiá);
+
+        // Duyệt qua từng mệnh giá tiền từ lớn đến nhỏ
+        for (int i = mệnhGiá.length - 1; i >= 0; i--) {
+            // Nếu số tiền cần rút lớn hơn hoặc bằng mệnh giá tiền hiện tại, thì rút số lượng tiền bằng mệnh giá tiền hiện tại
+            if (tiền >= mệnhGiá[i]) {
+                int sốTờTiền = tiền / mệnhGiá[i];
+                tiền -= sốTờTiền * mệnhGiá[i];
+                System.out.println("Rút " + sốTờTiền + " tờ tiền mệnh giá " + mệnhGiá[i]);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int tiền = 23987800;
+        int[] mệnhGiá = {500000, 200000, 100000, 50000, 20000, 10000, 5000, 2000, 1000, 500};
+
+        rútTiền(tiền, mệnhGiá);
+    }
+
+Câu 5:  Cho 2 Tập A,B gồm n,m phần tử. Hãy viết chương trình tìm dãy con chung liên tiếp dài nhất của 2 tập trên.
+
+public static void main(String[] args) {
+        int[] A = {1, 2, 3, 4, 5, 6,-1,2,8};
+        int[] B = {3, 4, 5, 6,-1,2, 7, 8,1, 2, 3, 4, 5};
+
+        int n = A.length;
+        int m = B.length;
+
+        int[][] dp = new int[n + 1][m + 1];
+        int maxLength = 0;
+        int endIndexA = 0;
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (A[i - 1] == B[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+
+                    if (dp[i][j] > maxLength) {
+                        maxLength = dp[i][j];
+                        endIndexA = i - 1;
+                    }
+                } else {
+                    dp[i][j] = 0;
+                }
+            }
+        }
+
+        if (maxLength == 0) {
+            System.out.println("Không có dãy con chung liên tiếp.");
+        } else {
+            System.out.print("Dãy con chung liên tiếp dài nhất: ");
+            for (int i = endIndexA - maxLength + 1; i <= endIndexA; i++) {
+                System.out.print(A[i] + " ");
+            }
+        }
+    }
+
+
+Câu 6: Cho  Tập A gồm n phần tử. Hãy viết chương trình tìm dãy con tăng hoặc giảm liên tiếp có biên độ lớn nhất.
+
+public static void findChangingPoints(int[] arr, List<Integer> arr1) {
+        int n = arr.length;
+        if (n == 0) {
+            return;
+        }
+
+        boolean increasing = true;
+        boolean decreasing = true;
+
+        for (int i = 1; i < n; i++) {
+            // Kiểm tra mảng đổi từ tăng sang giảm
+            if (arr[i - 1] > arr[i] && increasing) {
+                arr1.add(i - 1);
+                increasing = false;
+                decreasing = true;
+            } // Kiểm tra mảng đổi từ giảm sang tăng
+            else if (arr[i - 1] < arr[i] && decreasing) {
+                arr1.add(i - 1);
+                decreasing = false;
+                increasing = true;
+            }
+
+        }
+
+        // Kiểm tra phần tử cuối cùng của mảng
+        if (arr[n - 2] < arr[n - 1] && increasing) {
+            arr1.add(n - 1);
+        } else if (arr[n - 2] > arr[n - 1] && decreasing) {
+            arr1.add(n - 1);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {12,0,9,-0,-4,9,18,4,3,-3}; // Mảng ví dụ
+        System.out.print("Mảng vua nhap la: ");
+        for (int item : arr) {
+            System.out.print(item + " ");
+        }
+        List<Integer> arr1 = new ArrayList<>();
+
+        findChangingPoints(arr, arr1);
+
+        int bienDoLonNhat = 0;
+        int start = 0;
+        int end = 0;
+        
+        for (int i = 0; i < arr1.size() - 1; i++) {
+            if (Math.abs(arr[arr1.get(i)] - arr[arr1.get(i + 1)]) > bienDoLonNhat) {
+                bienDoLonNhat = Math.abs(arr[arr1.get(i)] - arr[arr1.get(i + 1)]);
+                start = arr1.get(i);
+                end = arr1.get(i + 1);
+            }
+        }
+
+        System.out.print("\nMang con Tang/Giam co bien do lon nhat la:  ");
+        for (int i = start; i <= end; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println("\nBien do = " + bienDoLonNhat);
+
+    }
+
+
+Câu 7: Có N đồ vật, đồ vật thứ i có trọng lượng ai và giá trị bi. Hãy chọn ra một số đồ vật có tổng trọng lượng tối đa là W và có tổng giá trị lớn nhất. 
+
+public static void main(String[] args) {
+        System.out.println("Nhap trong luong balo: ");
+        int W = new Scanner(System.in).nextInt();
+        int N = 4; // Số lượng đồ vật
+        int[] weights = {2, 1, 3, 2}; // Trọng lượng của từng đồ vật
+        int[] values = {12, 10, 20, 15}; // Giá trị của từng đồ vật
+
+        int[][] dp = new int[N + 1][W + 1];
+
+        for (int i = 0; i <= N; i++) {
+            for (int w = 0; w <= W; w++) {
+                if (i == 0 || w == 0) {
+                    dp[i][w] = 0;
+                } else if (weights[i - 1] <= w) {
+                    dp[i][w] = Math.max(values[i - 1] + dp[i - 1][w - weights[i - 1]], dp[i - 1][w]);
+                } else {
+                    dp[i][w] = dp[i - 1][w];
+                }
+            }
+        }
+
+        int maxValue = dp[N][W];
+        System.out.println("Tổng giá trị lớn nhất: " + maxValue);
+
+        // In ra danh sách các đồ vật được chọn
+        System.out.println("Các đồ vật được chọn:");
+        int w = W;
+        for (int i = N; i > 0 && maxValue > 0; i--) {
+            if (maxValue != dp[i - 1][w]) {
+                System.out.println("Đồ vật " + i + " - Trọng lượng: " + weights[i - 1] + " - Giá trị: " + values[i - 1]);
+                maxValue -= values[i - 1];
+                w -= weights[i - 1];
+            }
+        }
+    }
+
+
+
+Câu 8:  Viết chương trình giải bài toán tháp Hà nội bằng Thuật toán chia để trị.
+
+public static void main(String[] args) {
+        int numberOfDisks = 3;
+        char fromPeg = 'A';
+        char toPeg = 'C';
+        char auxPeg = 'B';
+
+        System.out.println("Bước đi chuyển " + numberOfDisks + " đĩa từ tháp " + fromPeg + " đến tháp " + toPeg);
+        solveHanoi(numberOfDisks, fromPeg, toPeg, auxPeg);
+    }
+
+    public static void solveHanoi(int n, char fromPeg, char toPeg, char auxPeg) {
+        if (n == 1) {
+            System.out.println("Chuyển đĩa 1 từ tháp " + fromPeg + " đến tháp " + toPeg);
+            return;
+        }
+
+        // Chuyển n-1 đĩa từ tháp fromPeg sang auxPeg
+        solveHanoi(n - 1, fromPeg, auxPeg, toPeg);
+
+        // Chuyển đĩa thứ n từ tháp fromPeg sang toPeg
+        System.out.println("Chuyển đĩa " + n + " từ tháp " + fromPeg + " đến tháp " + toPeg);
+
+        // Chuyển n-1 đĩa từ tháp auxPeg sang toPeg
+        solveHanoi(n - 1, auxPeg, toPeg, fromPeg);
+    }
+
+
+Câu 9: Tháp hà nội sử dụng đệ qui
+
+public static void main(String[] args) {
+        int numberOfDisks = 3;
+        char fromPeg = 'A';
+        char toPeg = 'C';
+        char auxPeg = 'B';
+
+        System.out.println("Bước đi chuyển " + numberOfDisks + " đĩa từ tháp " + fromPeg + " đến tháp " + toPeg);
+        solveHanoi(numberOfDisks, fromPeg, toPeg, auxPeg);
+    }
+
+    public static void solveHanoi(int n, char fromPeg, char toPeg, char auxPeg) {
+        if (n == 1) {
+            System.out.println("Chuyển đĩa 1 từ tháp " + fromPeg + " đến tháp " + toPeg);
+            return;
+        }
+
+        solveHanoi(n - 1, fromPeg, auxPeg, toPeg);
+        System.out.println("Chuyển đĩa " + n + " từ tháp " + fromPeg + " đến tháp " + toPeg);
+        solveHanoi(n - 1, auxPeg, toPeg, fromPeg);
+    }
