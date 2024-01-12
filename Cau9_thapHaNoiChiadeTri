@@ -1,0 +1,25 @@
+public static void main(String[] args) {
+        int numberOfDisks = 3;
+        char fromPeg = 'A';
+        char toPeg = 'C';
+        char auxPeg = 'B';
+
+        System.out.println("Bước đi chuyển " + numberOfDisks + " đĩa từ tháp " + fromPeg + " đến tháp " + toPeg);
+        solveHanoi(numberOfDisks, fromPeg, toPeg, auxPeg);
+    }
+
+    public static void solveHanoi(int n, char fromPeg, char toPeg, char auxPeg) {
+        if (n == 1) {
+            System.out.println("Chuyển đĩa 1 từ tháp " + fromPeg + " đến tháp " + toPeg);
+            return;
+        }
+
+        // Chuyển n-1 đĩa từ tháp fromPeg sang auxPeg
+        solveHanoi(n - 1, fromPeg, auxPeg, toPeg);
+
+        // Chuyển đĩa thứ n từ tháp fromPeg sang toPeg
+        System.out.println("Chuyển đĩa " + n + " từ tháp " + fromPeg + " đến tháp " + toPeg);
+
+        // Chuyển n-1 đĩa từ tháp auxPeg sang toPeg
+        solveHanoi(n - 1, auxPeg, toPeg, fromPeg);
+    }
